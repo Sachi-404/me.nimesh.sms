@@ -22,7 +22,7 @@ public class StudentPanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
 
         // Table
-        String[] columns = {"ID", "Full Name", "Date of Birth", "Email", "view"};
+        String[] columns = {"ID", "First Name", "Last Name", "Email", "view"};
         Object[][] data = {{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}};
 
         table = new JTable(data, columns);

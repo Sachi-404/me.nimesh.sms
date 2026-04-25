@@ -17,6 +17,8 @@ public class HibernateUtil {
         try {
                 return new Configuration()
                         .addAnnotatedClass(me.nimeshdev.model.User.class)
+                        .addAnnotatedClass(me.nimeshdev.model.Student.class)
+                        .addAnnotatedClass(me.nimeshdev.model.Subject.class)
                         .configure()
                         .buildSessionFactory();
 
