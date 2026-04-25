@@ -15,11 +15,13 @@ public class StudentFormDialog extends JDialog {
     private JButton saveBtn;
     private JButton cancelBtn;
 
+    private JLabel infoLabel;
+
     public StudentFormDialog(Frame parent, String title) {
         super(parent, title, true);
         setSize(400, 300);
         setLocationRelativeTo(parent);
-        setLayout(new GridLayout(5, 2, 10, 10));
+        setLayout(new GridLayout(6, 2, 10, 10));
 
         // Fields
         add(new JLabel("First Name:"));
@@ -38,6 +40,10 @@ public class StudentFormDialog extends JDialog {
         phoneField = new JTextField();
         add(phoneField);
 
+        add(new JLabel(""));
+        infoLabel = new JLabel("");
+        add(infoLabel);
+
         // Buttons
         saveBtn = new JButton("Save");
         cancelBtn = new JButton("Cancel");
@@ -48,6 +54,9 @@ public class StudentFormDialog extends JDialog {
         cancelBtn.addActionListener(e -> dispose());
     }
 
+    public JLabel getInfoLabel() {
+        return infoLabel;
+    }
     public String getFirstName() { return firstNameField.getText(); }
     public String getLastName() { return lastNameField.getText(); }
     public String getEmail() { return emailField.getText(); }

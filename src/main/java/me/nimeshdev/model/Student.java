@@ -21,6 +21,12 @@ public class Student {
 
     public Student() {}
 
+    public Student(String firstName, String lastName, StudentContact contact) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contact = contact;
+    }
+
     public List<Subject> getSubjects() {
         return subjects;
     }

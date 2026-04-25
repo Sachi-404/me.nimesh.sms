@@ -1,5 +1,7 @@
 package me.nimeshdev.ui.student;
 
+import me.nimeshdev.controller.StudentController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,7 +9,11 @@ public class StudentPanel extends JPanel {
 
     protected JTable table;
 
+    protected StudentController studentController;
+
     public StudentPanel() {
+        studentController = new StudentController();
+
         setLayout(new BorderLayout());
 
         // Top panel (search)

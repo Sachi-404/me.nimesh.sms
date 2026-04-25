@@ -1,5 +1,6 @@
 package me.nimeshdev.ui.student;
 
+import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
 import me.nimeshdev.model.embedded.StudentContact;
 
@@ -25,6 +26,20 @@ public class StudentAdminPanel extends StudentPanel {
             addStudentDialog.getSaveBtn().addActionListener(e -> {
 
                 // call to controller to save data ??????
+                try {
+                    int addedId = studentController.handleAddStudent(
+                            new Student(
+                                    addStudentDialog.getFirstName(), addStudentDialog.getLastName()
+                                    , new StudentContact(addStudentDialog.getPhone(), addStudentDialog.getEmail())
+                            ));
+
+                    if(addedId > -1) addStudentDialog.dispose(); // close dialog box if insertion is success
+                } catch (StudentDataValidationException ex) {
+
+                    addStudentDialog.getInfoLabel().setText(ex.getMessage());
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
             });
             addStudentDialog.setVisible(true);
         });
