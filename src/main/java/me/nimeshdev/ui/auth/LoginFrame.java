@@ -65,7 +65,11 @@ public class LoginFrame extends JFrame {
 
     private void login() throws Exception {
 
-        User user = new LoginController().handleLogin(usernameField.getText(), new String(passwordField.getPassword()));
+        // just TESTING admin login
+        User user = new LoginController().handleLogin(
+                    "sachi" //usernameField.getText()
+                    , "1234" // new String(passwordField.getPassword())
+                );
 
         if(user != null) {
 

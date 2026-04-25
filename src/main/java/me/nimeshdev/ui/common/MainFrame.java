@@ -12,22 +12,28 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
 
-    private CardLayout cardLayout;
-    private JPanel contentPanel;
+    protected CardLayout cardLayout;
+    protected JPanel contentPanel;
 
-    public MainFrame() {
+    public MainFrame(
+            DashboardPanel dashboardPanel
+            , StudentPanel studentPanel
+            , CoursePanel coursePanel
+            , AttendancePanel attendancePanel
+            , SettingsPanel settingsPanel
+    ) {
         super();
         setTitle("Student Management System");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        initUI();
+        initUI(dashboardPanel, studentPanel, coursePanel, attendancePanel, settingsPanel);
 
         setVisible(true);
     }
 
-    private void initUI() {
+    private void initUI(DashboardPanel dashboardPanel, StudentPanel studentPanel, CoursePanel coursePanel, AttendancePanel attendancePanel, SettingsPanel settingsPanel) {
         setLayout(new BorderLayout());
 
         // Sidebar
@@ -51,11 +57,11 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
 
-        contentPanel.add(new DashboardPanel(), "dashboard");
-        contentPanel.add(new StudentPanel(), "students");
-        contentPanel.add(new CoursePanel(), "courses");
-        contentPanel.add(new AttendancePanel(), "attendance");
-        contentPanel.add(new SettingsPanel(), "settings");
+        contentPanel.add(dashboardPanel, "dashboard");
+        contentPanel.add(studentPanel, "students");
+        contentPanel.add(coursePanel, "courses");
+        contentPanel.add(attendancePanel, "attendance");
+        contentPanel.add(settingsPanel, "settings");
 
         add(contentPanel, BorderLayout.CENTER);
 

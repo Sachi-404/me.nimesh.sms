@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class StudentPanel extends JPanel {
 
+    protected JTable table;
+
     public StudentPanel() {
         setLayout(new BorderLayout());
 
@@ -20,25 +22,13 @@ public class StudentPanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
 
         // Table
-        String[] columns = {"ID", "Name", "Email", "Course"};
-        Object[][] data = {}; // empty for now
+        String[] columns = {"ID", "Full Name", "Date of Birth", "Email", "view"};
+        Object[][] data = {{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}};
 
-        JTable table = new JTable(data, columns);
+        table = new JTable(data, columns);
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane, BorderLayout.CENTER);
 
-        // Bottom panel (buttons)
-        JPanel bottomPanel = new JPanel();
-
-        JButton addBtn = new JButton("Add");
-        JButton updateBtn = new JButton("Update");
-        JButton deleteBtn = new JButton("Delete");
-
-        bottomPanel.add(addBtn);
-        bottomPanel.add(updateBtn);
-        bottomPanel.add(deleteBtn);
-
-        add(bottomPanel, BorderLayout.SOUTH);
     }
 }
