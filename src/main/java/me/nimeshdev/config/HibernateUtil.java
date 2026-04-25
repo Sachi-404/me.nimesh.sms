@@ -6,16 +6,19 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-    private final static SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory;
+
+    public HibernateUtil() {
+        if(sessionFactory == null) sessionFactory = buildSessionFactory();
+    }
 
     private static SessionFactory buildSessionFactory() {
 
         try {
-
-            return new Configuration()
-                    .addAnnotatedClass(me.nimeshdev.model.User.class)
-                    .configure()
-                    .buildSessionFactory();
+                return new Configuration()
+                        .addAnnotatedClass(me.nimeshdev.model.User.class)
+                        .configure()
+                        .buildSessionFactory();
 
         } catch (Exception e) {
             throw new RuntimeException("Hibernate SessionFactory creation fail! :", e);

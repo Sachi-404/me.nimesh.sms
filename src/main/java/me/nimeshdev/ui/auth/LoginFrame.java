@@ -1,8 +1,11 @@
 package me.nimeshdev.ui.auth;
 
+import me.nimeshdev.config.HibernateUtil;
 import me.nimeshdev.controller.LoginController;
 import me.nimeshdev.exception.AuthenticationException;
 import me.nimeshdev.model.User;
+import me.nimeshdev.service.NavigationService;
+import me.nimeshdev.session.SessionManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +18,9 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         super();
+
+        HibernateUtil hibernateUtil = new HibernateUtil(); // load session factory
+
         setTitle("Login");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,8 +69,13 @@ public class LoginFrame extends JFrame {
 
         if(user != null) {
 
+            // set current login user
+            SessionManager.setCurrentUser(user);
             dispose(); // close login
-            new me.nimeshdev.ui.common.MainFrame();
+
+            // load role base navigation
+            NavigationService.navigate(SessionManager.getCurrentUser().getRole());
+
         }
     }
 }
