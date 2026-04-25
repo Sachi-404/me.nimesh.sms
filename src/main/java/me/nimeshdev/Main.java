@@ -1,5 +1,6 @@
 package me.nimeshdev;
 
+import me.nimeshdev.config.HibernateUtil;
 import me.nimeshdev.ui.auth.LoginFrame;
 
 public class Main {

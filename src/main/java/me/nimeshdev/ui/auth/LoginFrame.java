@@ -1,5 +1,9 @@
 package me.nimeshdev.ui.auth;
 
+import me.nimeshdev.controller.LoginController;
+import me.nimeshdev.exception.AuthenticationException;
+import me.nimeshdev.model.User;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +11,7 @@ public class LoginFrame extends JFrame {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private  JLabel infoLabel;
 
     public LoginFrame() {
         super();
@@ -22,10 +27,11 @@ public class LoginFrame extends JFrame {
 
     private void initUI() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1, 10, 10));
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
 
         usernameField = new JTextField();
         passwordField = new JPasswordField();
+        infoLabel = new JLabel();
 
         JButton loginBtn = new JButton("Login");
 
@@ -33,17 +39,32 @@ public class LoginFrame extends JFrame {
         panel.add(usernameField);
         panel.add(new JLabel("Password"));
         panel.add(passwordField);
+        panel.add(infoLabel);
 
         add(panel, BorderLayout.CENTER);
         add(loginBtn, BorderLayout.SOUTH);
 
         // Action
-        loginBtn.addActionListener(e -> login());
+        loginBtn.addActionListener(event -> {
+            try {
+                login();
+            }catch (AuthenticationException e) {
+
+                infoLabel.setText(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        });
     }
 
-    private void login() {
-        // For now just navigate
-        dispose(); // close login
-        new me.nimeshdev.ui.common.MainFrame();
+    private void login() throws Exception {
+
+        User user = new LoginController().handleLogin(usernameField.getText(), new String(passwordField.getPassword()));
+
+        if(user != null) {
+
+            dispose(); // close login
+            new me.nimeshdev.ui.common.MainFrame();
+        }
     }
 }
