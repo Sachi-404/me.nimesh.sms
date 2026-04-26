@@ -19,8 +19,6 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         super();
 
-        HibernateUtil hibernateUtil = new HibernateUtil(); // load session factory
-
         setTitle("Login");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

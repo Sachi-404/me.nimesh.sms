@@ -4,6 +4,8 @@ import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
 import me.nimeshdev.service.StudentService;
 
+import java.util.List;
+
 public class StudentController {
 
     private final StudentService studentService;
@@ -27,5 +29,10 @@ public class StudentController {
             throw new StudentDataValidationException("student contact can't be null");
 
         return studentService.addStudent(student);
+    }
+
+    public List<Student> handleAllStudent() throws Exception {
+
+        return studentService.getAllStudent();
     }
 }

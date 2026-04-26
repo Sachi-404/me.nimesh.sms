@@ -1,9 +1,12 @@
 package me.nimeshdev.ui.student;
 
 import me.nimeshdev.controller.StudentController;
+import me.nimeshdev.model.Student;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class StudentPanel extends JPanel {
 
@@ -27,14 +30,42 @@ public class StudentPanel extends JPanel {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // Table
-        String[] columns = {"ID", "First Name", "Last Name", "Email", "view"};
-        Object[][] data = {{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}};
-
-        table = new JTable(data, columns);
+        // Load table
+        table = new JTable();
+        loadTable();
         JScrollPane scrollPane = new JScrollPane(table);
-
         add(scrollPane, BorderLayout.CENTER);
+    }
 
+    protected void loadTable() {
+
+        List<Student> students;
+
+        try {
+            students = studentController.handleAllStudent();
+
+            String[] columns = {"ID", "First Name", "Last Name", "Email", "Phone"};
+
+            Object[][] data = new Object[students.size()][columns.length];
+
+            for (int i = 0; i < students.size(); i++) {
+                Student s = students.get(i);
+
+                data[i][0] = s.getStudentId();
+                data[i][1] = s.getFirstName();
+                data[i][2] = s.getLastName();
+                data[i][3] = s.getContact().getEmail();
+                data[i][4] = s.getContact().getPhoneNumber();
+            }
+
+            table.setModel(new DefaultTableModel(data, columns) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

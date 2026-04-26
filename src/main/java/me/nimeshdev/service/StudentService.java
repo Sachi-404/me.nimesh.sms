@@ -1,9 +1,12 @@
 package me.nimeshdev.service;
 
 import me.nimeshdev.dao.StudentDAO;
+import me.nimeshdev.exception.StudentDataFetchException;
 import me.nimeshdev.exception.StudentDataMergeException;
 import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
+
+import java.util.List;
 
 public class StudentService {
 
@@ -25,5 +28,14 @@ public class StudentService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public List<Student> getAllStudent() throws Exception {
+
+        List<Student> students = studentDAO.all();
+
+        if (students.isEmpty()) throw new StudentDataFetchException("no student records found", null);
+
+        return students;
     }
 }
