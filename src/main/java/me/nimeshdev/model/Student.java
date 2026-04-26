@@ -27,6 +27,13 @@ public class Student {
         this.contact = contact;
     }
 
+    public Student(int studentId, String firstName, String lastName, StudentContact contact) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contact = contact;
+    }
+
     public List<Subject> getSubjects() {
         return subjects;
     }

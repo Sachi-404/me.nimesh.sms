@@ -1,5 +1,6 @@
 package me.nimeshdev.ui.student;
 
+import me.nimeshdev.exception.StudentDataFetchException;
 import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
 import me.nimeshdev.model.embedded.StudentContact;
@@ -72,20 +73,38 @@ public class StudentAdminPanel extends StudentPanel {
         int selectedId= Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
 
         // Call to controller and get student data by selected id
-        Student student = new Student();
-        student.setContact(new StudentContact(null, null));
+        try {
+            Student student = studentController.handleStudentById(selectedId);
 
-        // Open student form dialog
-        StudentFormDialog studentUpdateDialog = new StudentFormDialog(null, "Update Student");
+            // Open student form dialog if there is no error selected row
+            StudentFormDialog studentUpdateDialog = new StudentFormDialog(null, "Update Student");
 
-        // Load fetch data to form
-        studentUpdateDialog.setData(student);
+            // Load fetch data to form
+            studentUpdateDialog.setData(student);
 
-        studentUpdateDialog.getSaveBtn().addActionListener(e -> {
+            studentUpdateDialog.getSaveBtn().addActionListener(e -> {
+                // Set new updated data
+                Student updatedStudent = studentUpdateDialog.loadData(student.getStudentId());
 
-            // Call controller to update record
-        });
+                System.out.println(updatedStudent);
 
-        studentUpdateDialog.setVisible(true);
+                // Call controller to update record
+                int effectedId = -1;
+                try {
+                    effectedId = studentController.handleStudentUpdate(updatedStudent);
+                    if (effectedId == student.getStudentId()) studentUpdateDialog.dispose();
+                    loadTable();
+                } catch (Exception ex) {
+                    studentUpdateDialog.getInfoLabel().setText(ex.getMessage());
+                }
+            });
+
+            studentUpdateDialog.setVisible(true);
+        } catch (StudentDataValidationException | StudentDataFetchException e) {
+            JOptionPane.showMessageDialog(null, e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     };
 }

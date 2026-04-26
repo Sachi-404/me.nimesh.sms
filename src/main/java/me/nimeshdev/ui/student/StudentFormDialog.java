@@ -1,6 +1,7 @@
 package me.nimeshdev.ui.student;
 
 import me.nimeshdev.model.Student;
+import me.nimeshdev.model.embedded.StudentContact;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,5 +70,14 @@ public class StudentFormDialog extends JDialog {
         lastNameField.setText(student.getLastName());
         emailField.setText(student.getContact().getEmail());
         phoneField.setText(student.getContact().getPhoneNumber());
+    }
+
+    public Student loadData(int id) {
+        return new Student(
+                id
+                , getFirstName()
+                , getLastName()
+                , new StudentContact(getPhone(), getEmail())
+        );
     }
 }

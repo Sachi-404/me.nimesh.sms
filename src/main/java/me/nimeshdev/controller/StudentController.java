@@ -15,6 +15,30 @@ public class StudentController {
     }
 
     public int handleAddStudent(Student student) throws Exception {
+        validateObject(student); // validate student Object
+
+        return studentService.addStudent(student);
+    }
+
+    public List<Student> handleAllStudent() throws Exception {
+
+        return studentService.getAllStudent();
+    }
+
+    public Student handleStudentById(int id) throws Exception {
+
+        if (id < -1) throw new StudentDataValidationException("invalid student id to fetch student record by id");
+
+        return studentService.getStudentById(id);
+    }
+
+    public int handleStudentUpdate(Student student) throws Exception {
+        validateObject(student);
+
+        return studentService.updateStudent(student);
+    }
+
+    private Student validateObject(Student student) throws Exception {
         // remove empty spaces
         student.setFirstName(student.getFirstName().trim());
         student.setLastName(student.getLastName().trim());
@@ -28,11 +52,6 @@ public class StudentController {
         else if(student.getContact().getEmail() == null || student.getContact().getPhoneNumber() == null)
             throw new StudentDataValidationException("student contact can't be null");
 
-        return studentService.addStudent(student);
-    }
-
-    public List<Student> handleAllStudent() throws Exception {
-
-        return studentService.getAllStudent();
+        return student;
     }
 }

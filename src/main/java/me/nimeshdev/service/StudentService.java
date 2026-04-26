@@ -38,4 +38,22 @@ public class StudentService {
 
         return students;
     }
+
+    public Student getStudentById(int id) throws Exception {
+
+        Student student =  studentDAO.get(id);
+
+        if(student == null) throw new StudentDataFetchException("no student record found", null);
+
+        return student;
+    }
+
+    public int updateStudent(Student student) throws  Exception{
+
+        int effectId = studentDAO.update(student);
+
+        if (effectId != student.getStudentId()) throw new StudentDataMergeException("fail to update student record", null);
+
+        return effectId;
+    }
 }

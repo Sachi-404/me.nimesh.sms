@@ -46,4 +46,31 @@ public class StudentDAO {
             throw new StudentDataFetchException(STR."all() : fail to fetch all student record : \{e.getMessage()}", e);
         }
     }
+
+    public Student get(int id) throws Exception {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+
+            return session.find(me.nimeshdev.model.Student.class, id);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public int update(Student student) throws Exception {
+
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+            student = session.merge(student);
+            transaction.commit();
+
+            return student != null ? student.getStudentId() : -1;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
 }
