@@ -50,20 +50,16 @@ public class StudentPanel extends JPanel {
 
                     int studentId = (int) table.getValueAt(row, 0);
 
-                    openStudentDetails(studentId);
+                    openStudentDetails(
+                            studentId
+                            , new StudentDetailsDialog(null, studentId, studentController)
+                    );
                 }
             }
         });
     }
 
-    private void openStudentDetails(int studentId) {
-
-        StudentDetailsDialog dialog = new StudentDetailsDialog(
-                SwingUtilities.getWindowAncestor(this),
-                studentId,
-                studentController
-        );
-
+    protected void openStudentDetails(int studentId, StudentDetailsDialog dialog) {
         dialog.setVisible(true);
     }
 

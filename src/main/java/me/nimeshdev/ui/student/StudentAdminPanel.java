@@ -35,6 +35,14 @@ public class StudentAdminPanel extends StudentPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    @Override
+    protected void openStudentDetails(int studentId, StudentDetailsDialog dialog) {
+        super.openStudentDetails(
+                studentId
+                , new AdminStudentDetailsDialog(null, studentId, studentController)
+        );
+    }
+
     ActionListener handleAddButton = event -> {
         StudentFormDialog addStudentDialog = new StudentFormDialog(null, "Add Student");
         addStudentDialog.getSaveBtn().addActionListener(e -> {

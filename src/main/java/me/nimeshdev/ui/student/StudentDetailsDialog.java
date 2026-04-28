@@ -3,7 +3,6 @@ package me.nimeshdev.ui.student;
 import me.nimeshdev.controller.StudentController;
 import me.nimeshdev.dto.CourseDTO;
 import me.nimeshdev.dto.StudentDTO;
-import me.nimeshdev.model.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,13 +11,13 @@ import java.util.List;
 
 public class StudentDetailsDialog extends JDialog {
 
-    private JTable courseTable;
+    protected JTable courseTable;
     private JLabel idLabel;
     private JLabel nameLabel;
     private JLabel emailLabel;
     private JLabel phoneLabel;
-    private StudentController controller;
-    private int studentId;
+    protected int studentId;
+    protected StudentController controller;
 
 
     public StudentDetailsDialog(Window parent, int studentId, StudentController controller) {
@@ -34,7 +33,7 @@ public class StudentDetailsDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
-    private void initUI() {
+    protected void initUI() {
 
         setLayout(new BorderLayout());
 
@@ -77,24 +76,9 @@ public class StudentDetailsDialog extends JDialog {
         JScrollPane scrollPane = new JScrollPane(courseTable);
 
         add(scrollPane, BorderLayout.CENTER);
-
-        // Bottom Panel (Buttons)
-        JPanel buttonPanel = new JPanel();
-
-        JButton enrollBtn = new JButton("Enroll Course");
-        JButton removeBtn = new JButton("Remove Course");
-
-        buttonPanel.add(enrollBtn);
-        buttonPanel.add(removeBtn);
-
-        add(buttonPanel, BorderLayout.SOUTH);
-
-        // Attach Events
-        enrollBtn.addActionListener(e -> openEnrollDialog());
-        removeBtn.addActionListener(e -> handleRemoveCourse());
     }
 
-    private void loadStudentData() {
+    protected void loadStudentData() {
 
         StudentDTO student = null;
 
@@ -115,7 +99,7 @@ public class StudentDetailsDialog extends JDialog {
                 loadCourses(student.getCourses());
     }
 
-    private void loadCourses(List<CourseDTO> courses) {
+    protected void loadCourses(List<CourseDTO> courses) {
 
         DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
 
@@ -129,32 +113,4 @@ public class StudentDetailsDialog extends JDialog {
             });
         }
     }
-
-    private void openEnrollDialog() {
-
-        EnrollCourseDialog dialog = new EnrollCourseDialog(
-                this,
-                studentId,
-                controller
-        );
-
-        dialog.setVisible(true);
-
-        // refresh after adding
-        loadStudentData();
-    }
-
-    private void handleRemoveCourse() {
-
-        int row = courseTable.getSelectedRow();
-        if (row == -1) return;
-
-        int courseId = (int) courseTable.getValueAt(row, 0);
-
-        // remove
-
-        loadStudentData();
-    }
-
-
 }
