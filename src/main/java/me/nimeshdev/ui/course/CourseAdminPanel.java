@@ -39,7 +39,6 @@ public class CourseAdminPanel extends CoursePanel {
         addCourseDialog.getSaveBtn().addActionListener(e -> {
 
             // call to controller to save data ??????
-
             try {
                 int effectedId = courseController.handleAddCourse(
                         new CourseDTO(
@@ -47,7 +46,9 @@ public class CourseAdminPanel extends CoursePanel {
                                 , addCourseDialog.getCourseCode()
                         ));
                 if (effectedId < 0) throw new CourseDataMergeException("fail to insert new course record", null);
-                else addCourseDialog.dispose();
+
+                addCourseDialog.dispose();
+                loadTable();
             } catch (Exception ex) {
                 addCourseDialog.getInfoLabel().setText(ex.getMessage());
             }

@@ -5,6 +5,8 @@ import me.nimeshdev.dto.CourseDTO;
 import me.nimeshdev.exception.CourseDataValidationException;
 import me.nimeshdev.model.Course;
 
+import java.util.List;
+
 public class CourseService {
 
     private final CourseDAO courseDAO;
@@ -22,5 +24,10 @@ public class CourseService {
                 courseDTO.getName()
                 , courseDTO.getCode()
         ));
+    }
+
+    public List<CourseDTO> getAllCourses() throws Exception {
+
+        return courseDAO.all();
     }
 }

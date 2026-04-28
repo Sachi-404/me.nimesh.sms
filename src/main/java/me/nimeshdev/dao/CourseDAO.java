@@ -1,9 +1,13 @@
 package me.nimeshdev.dao;
 
 import me.nimeshdev.config.HibernateUtil;
+import me.nimeshdev.dto.CourseDTO;
 import me.nimeshdev.model.Course;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class CourseDAO {
 
@@ -20,6 +24,21 @@ public class CourseDAO {
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             throw e;
+        }
+    }
+
+    public List<CourseDTO> all() throws RuntimeException {
+
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            Query<Course> query = session.createQuery("FROM Course", me.nimeshdev.model.Course.class);
+
+            // transfer data into DTO
+            return query.stream().map(
+                    course -> new CourseDTO(
+                            course.getCourseId(), course.getName(), course.getCode()
+                    )
+            ).toList();
         }
     }
 }

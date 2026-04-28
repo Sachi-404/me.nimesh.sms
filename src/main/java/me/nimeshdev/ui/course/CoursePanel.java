@@ -1,12 +1,11 @@
 package me.nimeshdev.ui.course;
 
 import me.nimeshdev.controller.CourseController;
-import me.nimeshdev.model.Course;
+import me.nimeshdev.dto.CourseDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 public class CoursePanel extends JPanel {
@@ -41,17 +40,17 @@ public class CoursePanel extends JPanel {
 
     protected void loadTable() {
 
-        List<Course> courses;
+        List<CourseDTO> courses;
 
         try {
-            courses = Arrays.asList(new Course("EEX4377", "Data Structures and Algorithms"), new Course("EEX3373", "Data Base System"));
+            courses = courseController.handleGetAllCourses();
 
             String[] columns = {"Subject Id", "Subject Code", "Subject Name"};
 
             Object[][] data = new Object[courses.size()][columns.length];
 
             for (int i = 0; i < courses.size(); i++) {
-                Course s = courses.get(i);
+                CourseDTO s = courses.get(i);
 
                 data[i][0] = s.getCourseId();
                 data[i][1] = s.getCode();

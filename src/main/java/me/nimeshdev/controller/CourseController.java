@@ -1,8 +1,11 @@
 package me.nimeshdev.controller;
 
 import me.nimeshdev.dto.CourseDTO;
+import me.nimeshdev.exception.CourseDataFetchException;
 import me.nimeshdev.exception.CourseDataValidationException;
 import me.nimeshdev.service.CourseService;
+
+import java.util.List;
 
 public class CourseController {
 
@@ -16,6 +19,15 @@ public class CourseController {
         validateCourse(courseDTO);
 
         return courseService.addCourse(courseDTO);
+    }
+
+    public List<CourseDTO> handleGetAllCourses() throws Exception {
+
+        List<CourseDTO> courseDTOS = courseService.getAllCourses();
+
+        if (courseDTOS.isEmpty()) throw new CourseDataFetchException("no courses are available", null);
+
+        return courseDTOS;
     }
 
     private void validateCourse(CourseDTO courseDTO) throws Exception {
