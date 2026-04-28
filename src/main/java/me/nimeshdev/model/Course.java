@@ -5,17 +5,28 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Subject {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subjectId;
+    private int CourseId;
     private String name;
     private String code;
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
     List<Student> students;
 
-    public Subject() {}
+    public Course() {}
+
+    public Course(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
+
+    public Course(int CourseId, String name, String code) {
+        this.CourseId = CourseId;
+        this.name = name;
+        this.code = code;
+    }
 
     public List<Student> getStudents() {
         return students;
@@ -25,12 +36,12 @@ public class Subject {
         this.students = students;
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public int getCourseId() {
+        return CourseId;
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+    public void setCourseId(int CourseId) {
+        this.CourseId = CourseId;
     }
 
     public String getName() {
@@ -51,6 +62,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        return STR."Subject{subjectId=\{subjectId}, name='\{name}\{'\''}, code='\{code}\{'\''}\{'}'}";
+        return STR."Subject{subjectId=\{CourseId}, name='\{name}\{'\''}, code='\{code}\{'\''}\{'}'}";
     }
 }
