@@ -1,5 +1,6 @@
 package me.nimeshdev.ui.course;
 
+import me.nimeshdev.controller.CourseController;
 import me.nimeshdev.model.Course;
 
 import javax.swing.*;
@@ -11,9 +12,12 @@ import java.util.List;
 public class CoursePanel extends JPanel {
 
     protected JTable table;
+    protected CourseController courseController;
 
 
     public CoursePanel() {
+
+        courseController = new CourseController();
 
         setLayout(new BorderLayout());
 

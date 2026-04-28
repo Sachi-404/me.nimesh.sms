@@ -17,7 +17,7 @@ public class Student {
     @Embedded
     private StudentContact contact;
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Subject> subjects;
+    private List<Course> courses;
 
     public Student() {}
 
@@ -34,12 +34,12 @@ public class Student {
         this.contact = contact;
     }
 
-    public List<Subject> getSubjects() {
-        return subjects;
+    public List<Course> getSubjects() {
+        return courses;
     }
 
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
+    public void setSubjects(List<Course> courses) {
+        this.courses = courses;
     }
 
     public int getStudentId() {

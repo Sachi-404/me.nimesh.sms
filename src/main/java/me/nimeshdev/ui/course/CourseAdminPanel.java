@@ -1,6 +1,7 @@
 package me.nimeshdev.ui.course;
 
-import me.nimeshdev.ui.student.StudentFormDialog;
+import me.nimeshdev.dto.CourseDTO;
+import me.nimeshdev.exception.CourseDataMergeException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,10 +34,23 @@ public class CourseAdminPanel extends CoursePanel {
     }
 
     ActionListener handleAddButton = event -> {
+
         CourseFormDialog addCourseDialog = new CourseFormDialog(null, "Add Course");
         addCourseDialog.getSaveBtn().addActionListener(e -> {
 
             // call to controller to save data ??????
+
+            try {
+                int effectedId = courseController.handleAddCourse(
+                        new CourseDTO(
+                                addCourseDialog.getCourseName()
+                                , addCourseDialog.getCourseCode()
+                        ));
+                if (effectedId < 0) throw new CourseDataMergeException("fail to insert new course record", null);
+                else addCourseDialog.dispose();
+            } catch (Exception ex) {
+                addCourseDialog.getInfoLabel().setText(ex.getMessage());
+            }
         });
         addCourseDialog.setVisible(true);
     };
