@@ -1,6 +1,7 @@
 package me.nimeshdev.service;
 
 import me.nimeshdev.dao.StudentDAO;
+import me.nimeshdev.dto.StudentDTO;
 import me.nimeshdev.exception.StudentDataFetchException;
 import me.nimeshdev.exception.StudentDataMergeException;
 import me.nimeshdev.exception.StudentDataValidationException;
@@ -55,5 +56,14 @@ public class StudentService {
         if (effectId != student.getStudentId()) throw new StudentDataMergeException("fail to update student record", null);
 
         return effectId;
+    }
+
+    public StudentDTO getStudentWithAllCourses(int id) throws Exception {
+
+        StudentDTO students = studentDAO.studentWithAllCourses(id);
+
+        if (students == null) throw new StudentDataFetchException("no student records found", null);
+
+        return students;
     }
 }

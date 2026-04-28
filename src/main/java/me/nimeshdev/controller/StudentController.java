@@ -1,5 +1,6 @@
 package me.nimeshdev.controller;
 
+import me.nimeshdev.dto.StudentDTO;
 import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
 import me.nimeshdev.service.StudentService;
@@ -38,7 +39,12 @@ public class StudentController {
         return studentService.updateStudent(student);
     }
 
-    private Student validateObject(Student student) throws Exception {
+    public StudentDTO handleStudentWithAllCourses(int id) throws Exception {
+
+        return studentService.getStudentWithAllCourses(id);
+    }
+
+    private void validateObject(Student student) throws Exception {
         // remove empty spaces
         student.setFirstName(student.getFirstName().trim());
         student.setLastName(student.getLastName().trim());
@@ -52,6 +58,6 @@ public class StudentController {
         else if(student.getContact().getEmail() == null || student.getContact().getPhoneNumber() == null)
             throw new StudentDataValidationException("student contact can't be null");
 
-        return student;
     }
+
 }

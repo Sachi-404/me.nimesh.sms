@@ -1,6 +1,7 @@
 package me.nimeshdev.dao;
 
 import me.nimeshdev.config.HibernateUtil;
+import me.nimeshdev.dto.StudentDTO;
 import me.nimeshdev.exception.StudentDataFetchException;
 import me.nimeshdev.exception.StudentDataMergeException;
 import me.nimeshdev.model.Student;
@@ -70,6 +71,19 @@ public class StudentDAO {
             return student != null ? student.getStudentId() : -1;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
+
+    public StudentDTO studentWithAllCourses(int studentId) throws Exception {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            Student student = session.getReference(me.nimeshdev.model.Student.class, studentId);
+
+            return student.transferAll();
+
+        } catch (Exception e) {
             throw e;
         }
     }

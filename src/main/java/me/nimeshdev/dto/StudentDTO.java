@@ -12,7 +12,7 @@ public class StudentDTO {
     private String firstName;
     private String lastName;
     private StudentContact contact;
-    private List<Course> courses;
+    private List<CourseDTO> courses;
 
     public StudentDTO() {}
 
@@ -29,7 +29,7 @@ public class StudentDTO {
         this.contact = contact;
     }
 
-    public StudentDTO(int studentId, String firstName, String lastName, StudentContact contact, List<Course> courses) {
+    public StudentDTO(int studentId, String firstName, String lastName, StudentContact contact, List<CourseDTO> courses) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,11 +37,11 @@ public class StudentDTO {
         this.courses = courses;
     }
 
-    public List<Course> getCourses() {
+    public List<CourseDTO> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<CourseDTO> courses) {
         this.courses = courses;
     }
 

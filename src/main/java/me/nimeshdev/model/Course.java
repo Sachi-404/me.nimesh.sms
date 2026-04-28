@@ -1,6 +1,7 @@
 package me.nimeshdev.model;
 
 import jakarta.persistence.*;
+import me.nimeshdev.dto.CourseDTO;
 
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class Course {
         this.CourseId = CourseId;
         this.name = name;
         this.code = code;
+    }
+
+    public CourseDTO transfer() {
+        return new CourseDTO(getCourseId(), getName(), getCode());
     }
 
     public List<Student> getStudents() {

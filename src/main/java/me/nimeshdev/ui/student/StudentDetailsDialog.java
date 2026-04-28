@@ -1,12 +1,14 @@
 package me.nimeshdev.ui.student;
 
 import me.nimeshdev.controller.StudentController;
+import me.nimeshdev.dto.CourseDTO;
 import me.nimeshdev.dto.StudentDTO;
-import me.nimeshdev.model.embedded.StudentContact;
+import me.nimeshdev.model.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class StudentDetailsDialog extends JDialog {
 
@@ -37,7 +39,7 @@ public class StudentDetailsDialog extends JDialog {
         setLayout(new BorderLayout());
 
         // Top Panel (Student Info)
-        JPanel infoPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        JPanel infoPanel = new JPanel(new GridLayout(4, 1, 1, 5));
 
         infoPanel.add(new JLabel("Id:"));
         idLabel = new JLabel();
@@ -92,6 +94,42 @@ public class StudentDetailsDialog extends JDialog {
         removeBtn.addActionListener(e -> handleRemoveCourse());
     }
 
+    private void loadStudentData() {
+
+        StudentDTO student = null;
+
+        try {
+            student = controller.handleStudentWithAllCourses(studentId);
+
+            idLabel.setText(String.valueOf(student.getStudentId()));
+            nameLabel.setText(STR."\{student.getFirstName()} \{student.getLastName()}");
+            emailLabel.setText(student.getContact().getEmail());
+            phoneLabel.setText(student.getContact().getPhoneNumber());
+        } catch (Exception e) {
+            this.dispose();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        if (student != null)
+            if (student.getCourses() != null)
+                loadCourses(student.getCourses());
+    }
+
+    private void loadCourses(List<CourseDTO> courses) {
+
+        DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
+
+        model.setRowCount(0); // clear old data
+
+        for (CourseDTO c : courses) {
+            model.addRow(new Object[]{
+                    c.getCourseId(),
+                    c.getCode(),
+                    c.getName()
+            });
+        }
+    }
+
     private void openEnrollDialog() {
 
         EnrollCourseDialog dialog = new EnrollCourseDialog(
@@ -116,18 +154,6 @@ public class StudentDetailsDialog extends JDialog {
         // remove
 
         loadStudentData();
-    }
-
-    private void loadStudentData() {
-
-        StudentDTO student = new StudentDTO("test", "test 2", new StudentContact("@gmail", "077"));
-
-        idLabel.setText(student.toString());
-        nameLabel.setText(STR."\{student.getFirstName()} \{student.getLastName()}");
-        emailLabel.setText(student.getContact().getEmail());
-        phoneLabel.setText(student.getContact().getPhoneNumber());
-
-//        loadCourses(student.getCourses());
     }
 
 
