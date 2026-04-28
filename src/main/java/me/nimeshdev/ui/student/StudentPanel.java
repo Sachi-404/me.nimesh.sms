@@ -6,6 +6,8 @@ import me.nimeshdev.model.Student;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class StudentPanel extends JPanel {
@@ -35,6 +37,34 @@ public class StudentPanel extends JPanel {
         loadTable();
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
+
+        // Detect row double click
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if (e.getClickCount() == 2) {
+
+                    int row = table.getSelectedRow();
+                    if (row == -1) return;
+
+                    int studentId = (int) table.getValueAt(row, 0);
+
+                    openStudentDetails(studentId);
+                }
+            }
+        });
+    }
+
+    private void openStudentDetails(int studentId) {
+
+        StudentDetailsDialog dialog = new StudentDetailsDialog(
+                SwingUtilities.getWindowAncestor(this),
+                studentId,
+                studentController
+        );
+
+        dialog.setVisible(true);
     }
 
     protected void loadTable() {
