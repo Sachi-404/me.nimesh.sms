@@ -1,5 +1,6 @@
 package me.nimeshdev.ui.student;
 
+import me.nimeshdev.controller.CourseController;
 import me.nimeshdev.controller.StudentController;
 import me.nimeshdev.dto.CourseDTO;
 
@@ -13,6 +14,7 @@ public class EnrollCourseDialog extends JDialog {
 
     private JTable table;
     private StudentController controller;
+    private CourseController courseController;
     private int studentId;
 
     public EnrollCourseDialog(Window parent, int studentId, StudentController controller) {
@@ -32,7 +34,7 @@ public class EnrollCourseDialog extends JDialog {
 
         setLayout(new BorderLayout());
 
-        // 🔹 Table
+        // Table
         String[] columns = {"ID", "Course Name"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
@@ -65,16 +67,25 @@ public class EnrollCourseDialog extends JDialog {
 
     private void loadCourses() {
 
-        List<CourseDTO> courses = Arrays.asList(new CourseDTO("sda", "dsa"), new CourseDTO("das", "dsa"));
+        courseController = new CourseController();
+
+        List<CourseDTO> courses = null;
+        try {
+            courses = courseController.handleAllCoursesThatStudentNotRegisterYet(studentId);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
 
-        for (CourseDTO c : courses) {
-            model.addRow(new Object[]{
-                    c.getCourseId(),
-                    c.getName()
-            });
+        if (courses != null) {
+            for (CourseDTO c : courses) {
+                model.addRow(new Object[]{
+                        c.getCourseId(),
+                        c.getName()
+                });
+            }
         }
     }
 
