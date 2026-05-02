@@ -30,6 +30,13 @@ public class CourseController {
         return courseDTOS;
     }
 
+    public List<CourseDTO> handleAllCoursesThatStudentNotRegisterYet(int studentId) throws Exception {
+
+        if(studentId < 0) throw new CourseDataValidationException("invalid studentId for fetch all none registered courses", null);
+
+        return courseService.allCoursesThatStudentNotRegisterYet(studentId);
+    }
+
     private void validateCourse(CourseDTO courseDTO) throws Exception {
         if (courseDTO == null) throw new CourseDataValidationException("course dto can't be null", null);
 

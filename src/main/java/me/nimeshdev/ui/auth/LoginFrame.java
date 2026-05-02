@@ -26,6 +26,10 @@ public class LoginFrame extends JFrame {
 
         initUI();
 
+        // test admin login
+        usernameField.setText("sachi");
+        passwordField.setText("1234");
+
         setVisible(true);
     }
 
@@ -65,8 +69,8 @@ public class LoginFrame extends JFrame {
 
         // just TESTING admin login
         User user = new LoginController().handleLogin(
-                    "sachi" //usernameField.getText()
-                    , "1234" // new String(passwordField.getPassword())
+                    usernameField.getText()
+                    , new String(passwordField.getPassword())
                 );
 
         if(user != null) {

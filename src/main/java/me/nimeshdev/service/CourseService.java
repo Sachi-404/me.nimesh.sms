@@ -30,4 +30,9 @@ public class CourseService {
 
         return courseDAO.all();
     }
+
+    public List<CourseDTO> allCoursesThatStudentNotRegisterYet(int studentId) throws Exception {
+
+        return courseDAO.allCoursesThatStudentNotRegisterYet(studentId);
+    }
 }

@@ -1,6 +1,7 @@
 package me.nimeshdev.dto;
 
 
+import me.nimeshdev.model.Course;
 import me.nimeshdev.model.Student;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public class CourseDTO {
         this.CourseId = CourseId;
         this.name = name;
         this.code = code;
+    }
+
+    public Course transfer() {
+        return new Course(getCourseId(), getName(), getCode());
     }
 
     public List<Student> getStudents() {

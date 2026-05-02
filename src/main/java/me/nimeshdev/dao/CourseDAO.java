@@ -41,4 +41,34 @@ public class CourseDAO {
             ).toList();
         }
     }
+
+    public Course get(int courseId) {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+
+            return session.find(me.nimeshdev.model.Course.class, courseId);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public List<CourseDTO> allCoursesThatStudentNotRegisterYet(int studentId) throws Exception {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            return session.createQuery(
+                    """
+                            SELECT c FROM Course c
+                            WHERE c NOT IN (
+                                SELECT cs FROM Student s
+                                JOIN s.courses cs
+                                WHERE s.studentId = :studentId
+                            )"""
+                    , me.nimeshdev.model.Course.class
+                ).setParameter("studentId", studentId).stream().map(Course::transfer).toList();
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
