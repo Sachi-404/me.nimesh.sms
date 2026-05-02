@@ -1,20 +1,25 @@
 package me.nimeshdev.service;
 
+import me.nimeshdev.dao.CourseDAO;
 import me.nimeshdev.dao.StudentDAO;
+import me.nimeshdev.dto.CourseDTO;
 import me.nimeshdev.dto.StudentDTO;
 import me.nimeshdev.exception.StudentDataFetchException;
 import me.nimeshdev.exception.StudentDataMergeException;
 import me.nimeshdev.exception.StudentDataValidationException;
 import me.nimeshdev.model.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentService {
 
     private final StudentDAO studentDAO;
+    private final CourseDAO courseDAO;
 
     public StudentService() {
         this.studentDAO = new StudentDAO();
+        this.courseDAO = new CourseDAO();
     }
 
     public int addStudent(Student student) throws Exception {
@@ -65,5 +70,18 @@ public class StudentService {
         if (students == null) throw new StudentDataFetchException("no student records found", null);
 
         return students;
+    }
+
+    public void enrollCourse(int studentId, int courseId) throws Exception {
+
+        StudentDTO studentDTO = studentDAO.studentWithAllCourses(studentId);
+        CourseDTO courseDTO = courseDAO.get(courseId).transfer();
+
+        ArrayList<CourseDTO> list = new ArrayList<>(studentDTO.getCourses());
+        list.add(courseDTO);
+        studentDTO.setCourses(list);
+
+        studentDAO.update(studentDTO.transfer());
+
     }
 }

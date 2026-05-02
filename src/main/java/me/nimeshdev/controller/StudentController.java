@@ -44,6 +44,11 @@ public class StudentController {
         return studentService.getStudentWithAllCourses(id);
     }
 
+    public void enrollCourse(int studentId, int courseId) throws Exception {
+
+        studentService.enrollCourse(studentId, courseId);
+    }
+
     private void validateObject(Student student) throws Exception {
         // remove empty spaces
         student.setFirstName(student.getFirstName().trim());

@@ -35,6 +35,22 @@ public class Student {
         this.contact = contact;
     }
 
+    public Student(int studentId, String firstName, String lastName, StudentContact contact, List<Course> courses) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contact = contact;
+        this.courses = courses;
+    }
+
+    public StudentDTO transfer() {
+        return new StudentDTO(
+                getStudentId()
+                , getFirstName()
+                , getLastName()
+                , getContact());
+    }
+
     public StudentDTO transferAll() {
         return new StudentDTO(
                 getStudentId()

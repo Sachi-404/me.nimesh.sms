@@ -2,6 +2,7 @@ package me.nimeshdev.dto;
 
 import jakarta.persistence.*;
 import me.nimeshdev.model.Course;
+import me.nimeshdev.model.Student;
 import me.nimeshdev.model.embedded.StudentContact;
 
 import java.util.List;
@@ -35,6 +36,15 @@ public class StudentDTO {
         this.lastName = lastName;
         this.contact = contact;
         this.courses = courses;
+    }
+
+    public Student transfer() {
+        return new Student(
+                getStudentId()
+                , getFirstName()
+                , getLastName()
+                , getContact()
+                , getCourses().stream().map(CourseDTO::transfer).toList());
     }
 
     public List<CourseDTO> getCourses() {

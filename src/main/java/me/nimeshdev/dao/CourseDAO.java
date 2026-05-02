@@ -42,6 +42,16 @@ public class CourseDAO {
         }
     }
 
+    public Course get(int courseId) {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+
+            return session.find(me.nimeshdev.model.Course.class, courseId);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public List<CourseDTO> allCoursesThatStudentNotRegisterYet(int studentId) throws Exception {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

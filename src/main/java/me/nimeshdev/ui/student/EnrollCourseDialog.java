@@ -101,12 +101,13 @@ public class EnrollCourseDialog extends JDialog {
         int courseId = (int) table.getValueAt(row, 0);
 
         try {
-//            controller.enrollCourse(studentId, courseId);
+            controller.enrollCourse(studentId, courseId);
 
             JOptionPane.showMessageDialog(this, "Course enrolled successfully!");
             dispose();
 
         } catch (Exception ex) {
+            System.out.println(ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
